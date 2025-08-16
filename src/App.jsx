@@ -472,10 +472,10 @@ const BarsAndBytes = () => {
       <div className="grid items-start gap-8 md:gap-10 md:grid-cols-2">
         {/* Left side */}
         <div>
-          <h2 className="mb-3 text-2xl sm:text-3xl font-bold text-zinc-100">
+          <h2 className="mb-3 text-xl sm:text-2xl md:text-3xl font-bold text-zinc-100">
             Bars & Bytes
           </h2>
-          <p className="text-sm sm:text-base text-zinc-300/90">
+          <p className="text-xs sm:text-sm md:text-base text-zinc-300/90">
             Snippets and micro-thoughts that capture the way I build: readable,
             reusable, rhythm-first.
           </p>
@@ -500,45 +500,44 @@ const BarsAndBytes = () => {
         {/* Right side */}
         <div>
           <Tabs defaultValue="stack" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 text-xs sm:text-sm">
+            <TabsList className="grid w-full grid-cols-3 text-[10px] sm:text-xs md:text-sm">
               <TabsTrigger value="stack">Stack</TabsTrigger>
               <TabsTrigger value="process">Process</TabsTrigger>
               <TabsTrigger value="values">Values</TabsTrigger>
             </TabsList>
+              <TabsContent value="stack" className="space-y-2 mt-3">
+                <div className="flex flex-wrap gap-2">
+                  <Badge>React</Badge>
+                  <Badge>TypeScript</Badge>
+                  <Badge>Tailwind</Badge>
+                  <Badge>Framer Motion</Badge>
+                  <Badge>MUI</Badge>
+                </div>
+                <p className="text-sm text-zinc-300/90">
+                  Also comfy with Node, Express, PostgreSQL, MongoDB, and
+                  cloud-ish stuff.
+                </p>
+              </TabsContent>
 
-            <TabsContent value="stack" className="space-y-2 mt-3">
-              <div className="flex flex-wrap gap-2">
-                <Badge>React</Badge>
-                <Badge>TypeScript</Badge>
-                <Badge>Tailwind</Badge>
-                <Badge>Framer Motion</Badge>
-                <Badge>MUI</Badge>
-              </div>
-              <p className="text-sm text-zinc-300/90">
-                Also comfy with Node, Express, PostgreSQL, MongoDB, and
-                cloud-ish stuff.
-              </p>
-            </TabsContent>
+              <TabsContent value="process" className="space-y-2 mt-3">
+                <p className="text-sm text-zinc-300/90">
+                  Design in the browser, iterate fast, instrument UX, and measure
+                  delight.
+                </p>
+                <p className="text-sm text-zinc-300/90">
+                  Prefer meaningful motion over flamboyance. Ship minimal, then
+                  season.
+                </p>
+              </TabsContent>
 
-            <TabsContent value="process" className="space-y-2 mt-3">
-              <p className="text-sm text-zinc-300/90">
-                Design in the browser, iterate fast, instrument UX, and measure
-                delight.
-              </p>
-              <p className="text-sm text-zinc-300/90">
-                Prefer meaningful motion over flamboyance. Ship minimal, then
-                season.
-              </p>
-            </TabsContent>
-
-            <TabsContent value="values" className="space-y-2 mt-3">
-              <p className="text-sm text-zinc-300/90">
-                Accessibility, performance, clarity—and a touch of play.
-              </p>
-              <p className="text-sm text-zinc-300/90">
-                Be kind to teammates and ruthless with flaky builds.
-              </p>
-            </TabsContent>
+              <TabsContent value="values" className="space-y-2 mt-3">
+                <p className="text-sm text-zinc-300/90">
+                  Accessibility, performance, clarity—and a touch of play.
+                </p>
+                <p className="text-sm text-zinc-300/90">
+                  Be kind to teammates and ruthless with flaky builds.
+                </p>
+              </TabsContent>
           </Tabs>
         </div>
       </div>
