@@ -6,7 +6,7 @@ import {
   SkipBack, SkipForward   // <— add these
 } from "lucide-react";
 
-import  Aurora  from "./components/ui/Aurora.jsx";
+import Aurora from "./components/ui/Aurora.jsx";
 import { Button } from "./components/ui/Button.jsx";
 import {
   Card,
@@ -468,17 +468,19 @@ const BarsAndBytes = () => {
     "ship(ideas, { clean: true, bold: true })",
   ];
   return (
-    <section className="relative mx-auto max-w-6xl px-6 py-24">
-      <div className="grid items-start gap-10 md:grid-cols-2">
+    <section className="relative mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-24 overflow-x-hidden">
+      <div className="grid items-start gap-8 md:gap-10 md:grid-cols-2">
+        {/* Left side */}
         <div>
-          <h2 className="mb-3 text-3xl font-bold text-zinc-100">
+          <h2 className="mb-3 text-2xl sm:text-3xl font-bold text-zinc-100">
             Bars & Bytes
           </h2>
-          <p className="text-zinc-300/90">
-            Snippets and micro‑thoughts that capture the way I build: readable,
-            reusable, rhythm‑first.
+          <p className="text-sm sm:text-base text-zinc-300/90">
+            Snippets and micro-thoughts that capture the way I build: readable,
+            reusable, rhythm-first.
           </p>
           <Separator className="my-6" />
+
           <div className="space-y-3">
             {bars.map((b, i) => (
               <motion.pre
@@ -487,30 +489,37 @@ const BarsAndBytes = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="overflow-x-auto rounded-xl border border-white/10 bg-black/50 p-4 text-[13px] text-emerald-300 shadow-inner"
+                className="overflow-x-auto rounded-lg border border-white/10 bg-black/50 p-3 sm:p-4 text-[12px] sm:text-[13px] text-emerald-300 shadow-inner"
               >
-                {`// ${i + 1}`}
-                {b}
+                {`// ${i + 1}`} {b}
               </motion.pre>
             ))}
           </div>
         </div>
+
+        {/* Right side */}
         <div>
           <Tabs defaultValue="stack" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-3 text-xs sm:text-sm">
               <TabsTrigger value="stack">Stack</TabsTrigger>
               <TabsTrigger value="process">Process</TabsTrigger>
               <TabsTrigger value="values">Values</TabsTrigger>
             </TabsList>
+
             <TabsContent value="stack" className="space-y-2 mt-3">
-              <Badge>React</Badge> <Badge>TypeScript</Badge>{" "}
-              <Badge>Tailwind</Badge> <Badge>Framer Motion</Badge>{" "}
-              <Badge>MUI</Badge>
+              <div className="flex flex-wrap gap-2">
+                <Badge>React</Badge>
+                <Badge>TypeScript</Badge>
+                <Badge>Tailwind</Badge>
+                <Badge>Framer Motion</Badge>
+                <Badge>MUI</Badge>
+              </div>
               <p className="text-sm text-zinc-300/90">
                 Also comfy with Node, Express, PostgreSQL, MongoDB, and
-                cloud‑ish stuff.
+                cloud-ish stuff.
               </p>
             </TabsContent>
+
             <TabsContent value="process" className="space-y-2 mt-3">
               <p className="text-sm text-zinc-300/90">
                 Design in the browser, iterate fast, instrument UX, and measure
@@ -521,6 +530,7 @@ const BarsAndBytes = () => {
                 season.
               </p>
             </TabsContent>
+
             <TabsContent value="values" className="space-y-2 mt-3">
               <p className="text-sm text-zinc-300/90">
                 Accessibility, performance, clarity—and a touch of play.
@@ -534,6 +544,7 @@ const BarsAndBytes = () => {
       </div>
     </section>
   );
+
 };
 
 const TimelineItem = ({ year, title, body }) => (
