@@ -255,7 +255,10 @@ const Hero = () => {
           tracks={tracks}
         />
         <audio ref={audioRef} src={tracks[trackIndex].audio} preload="auto" />
+        <div className="relative h-24">
+
         <AudioVisualizer audioRef={audioRef} barColor="#f0abfc" />
+        </div>
       </div>
 
       <motion.div
