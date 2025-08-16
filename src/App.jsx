@@ -468,8 +468,8 @@ const BarsAndBytes = () => {
     "ship(ideas, { clean: true, bold: true })",
   ];
   return (
-    <section className="relative mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20 overflow-x-hidden">
-      <div className="grid items-start gap-8 md:gap-10 md:grid-cols-2">
+    <section className="relative mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20 overflow-hidden">
+      <div className="grid items-start gap-8 md:gap-10 md:grid-cols-2 max-w-full">
         {/* Left */}
         <div>
           <h2 className="mb-2 text-xl sm:text-2xl md:text-3xl font-bold text-zinc-100">
@@ -489,8 +489,9 @@ const BarsAndBytes = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="w-full max-w-full overflow-x-auto rounded-lg border border-white/10 bg-black/50
-                       p-2 sm:p-3 md:p-4 text-[11px] sm:text-[12px] md:text-[13px] text-emerald-300 shadow-inner"
+                className="w-full max-w-full rounded-lg border border-white/10 bg-black/50
+                 p-2 sm:p-3 md:p-4 text-[11px] sm:text-[12px] md:text-[13px] text-emerald-300 shadow-inner
+                 [overflow-wrap:anywhere] sm:[overflow-wrap:normal]"
               >
                 {`// ${i + 1} `}{b}
               </motion.pre>
