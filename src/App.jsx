@@ -608,25 +608,25 @@ const Contact = () => (
       <div className="flex flex-wrap items-center gap-4 text-sm text-zinc-400">
         <a
           className="flex items-center gap-2 hover:text-zinc-100"
-          href="https://github.com/"
+          href="https://github.com/Bearism "
           target="_blank"
           rel="noreferrer"
         >
-          <Github className="h-4 w-4" /> github.com/kaandrick
+          <Github className="h-4 w-4" /> github.com/Bearism
         </a>
         <a
           className="flex items-center gap-2 hover:text-zinc-100"
-          href="https://linkedin.com/"
+          href="https://www.linkedin.com/in/kaan-celebi-bb6641252/"
           target="_blank"
           rel="noreferrer"
         >
-          <Linkedin className="h-4 w-4" /> linkedin.com/in/kaandrick
+          <Linkedin className="h-4 w-4" /> linkedin.com/in/kaan-celebi
         </a>
         <a
           className="flex items-center gap-2 hover:text-zinc-100"
-          href="mailto:hello@kaandrick.dev"
+          href="mailto:kaancheleby@gmail.com"
         >
-          <Mail className="h-4 w-4" /> hello@kaandrick.dev
+          <Mail className="h-4 w-4" /> kaancheleby@gmail.com
         </a>
       </div>
     </Card>
