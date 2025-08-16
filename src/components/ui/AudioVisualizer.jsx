@@ -35,7 +35,7 @@ export default function AudioVisualizer({ audioRef, barColor = "#f0abfc" }) {
 
     const ctx = getAudioContext();
 
-    // Unlock audio on first gesture
+    // Unlock on first gesture (once)
     const unlock = async () => {
       if (ctx.state === "suspended") await ctx.resume();
     };
@@ -43,29 +43,28 @@ export default function AudioVisualizer({ audioRef, barColor = "#f0abfc" }) {
     window.addEventListener("keydown", unlock, { once: true });
     window.addEventListener("touchstart", unlock, { once: true });
 
-    // Create/reuse analyser
+    // Create/reuse a single analyser
     if (!analyserRef.current) {
       const analyser = ctx.createAnalyser();
       analyser.fftSize = 256;
       analyser.smoothingTimeConstant = 0.85;
-      analyser.connect(ctx.destination);
+      analyser.connect(ctx.destination); // keep audio flowing through analyser
       analyserRef.current = analyser;
     }
 
-    // Rewire only if element changes
+    // Only (re)wire when the actual <audio> element instance changes
     if (el !== lastElRef.current) {
       const srcCurrent = getOrCreateMediaElementSource(el);
 
+      // If a previous element was wired, disconnect it from this analyser
       if (lastElRef.current) {
         const oldSrc = sourceMap.get(lastElRef.current);
-        try {
-          oldSrc && oldSrc.disconnect(analyserRef.current);
-        } catch {}
+        try { oldSrc && oldSrc.disconnect(analyserRef.current); } catch {}
       }
 
-      try {
-        srcCurrent.connect(analyserRef.current);
-      } catch (e) {
+      // Connect current element → analyser (only once per element)
+      try { srcCurrent.connect(analyserRef.current); } catch (e) {
+        // If this ever fires, another part of the app created a source for the same element.
         console.warn("Media source connect skipped:", e);
       }
 
@@ -80,16 +79,11 @@ export default function AudioVisualizer({ audioRef, barColor = "#f0abfc" }) {
     const gctx = canvas.getContext("2d");
     const buffer = new Uint8Array(analyser.frequencyBinCount);
 
-    // Resize handler: match internal buffer to CSS size
-    const resize = () => {
-      const dpr = Math.max(1, window.devicePixelRatio || 1);
-      const { width, height } = canvas.getBoundingClientRect();
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
-      gctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-    resize();
-    window.addEventListener("resize", resize);
+    // build gradient once
+    const gradient = gctx.createLinearGradient(0, 0, canvas.width, 0);
+    gradient.addColorStop(0, "#a855f7");
+    gradient.addColorStop(0.5, "#ec4899");
+    gradient.addColorStop(1, "#f97316");
 
     const draw = () => {
       analyser.getByteFrequencyData(buffer);
@@ -97,15 +91,10 @@ export default function AudioVisualizer({ audioRef, barColor = "#f0abfc" }) {
       gctx.clearRect(0, 0, width, height);
 
       const barW = Math.max(2, (width / buffer.length) * 2);
-      const gradient = gctx.createLinearGradient(0, 0, width, 0);
-      gradient.addColorStop(0, "#a855f7");
-      gradient.addColorStop(0.5, "#ec4899");
-      gradient.addColorStop(1, "#f97316");
-
       for (let i = 0, x = 0; i < buffer.length; i++, x += barW + 1) {
         const val = buffer[i];
         const barH = (val / 255) * height;
-        gctx.fillStyle = gradient; // or barColor for solid
+        gctx.fillStyle = gradient; // or barColor if you prefer a solid
         gctx.fillRect(x, height - barH, barW, barH);
       }
       rafRef.current = requestAnimationFrame(draw);
@@ -115,14 +104,20 @@ export default function AudioVisualizer({ audioRef, barColor = "#f0abfc" }) {
 
     return () => {
       cancelAnimationFrame(rafRef.current);
-      window.removeEventListener("resize", resize);
+      // Do NOT destroy the MediaElementSource; it belongs to the <audio> element lifetime.
+      // If you ever unmount the visualizer permanently and want to decouple audio from analyser:
+      // try { sourceMap.get(lastElRef.current)?.disconnect(analyserRef.current) } catch {}
     };
+    // IMPORTANT: depend on the ELEMENT instance, not its src,
+    // so we don't re-create the source on every track change.
   }, [audioRef?.current]);
 
   return (
     <canvas
       ref={canvasRef}
-      className="w-full h-full block"
+      width={300}
+      height={80}
+      className="mx-auto mt-4 pt-4 sm:pt-0"
     />
   );
 }

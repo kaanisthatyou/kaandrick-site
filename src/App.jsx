@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useAnimationFrame, useMotionValue } from "framer-motion";
 import {
   Github, Linkedin, Mail, Music2, PlayCircle, PauseCircle,
   ChevronDown, ExternalLink, Sparkles,
@@ -70,27 +70,34 @@ const NeonWord = ({ text }) => (
   <GlitchText text={text} />
 );
 
-const Vinyl = ({ playing, onToggle, trackIndex, setTrackIndex, tracks }) => {
+const Vinyl = ({ playing, trackIndex, setTrackIndex, tracks, onToggle }) => {
   const currentTrack = tracks?.[trackIndex];
+  const rotate = useMotionValue(0);
 
-  if (!currentTrack) return null; // safety
+  if (!currentTrack) return null;
 
   const changeTrack = (direction) => {
     const nextIndex =
       direction === "next"
         ? (trackIndex + 1) % tracks.length
         : (trackIndex - 1 + tracks.length) % tracks.length;
-
     setTrackIndex(nextIndex);
   };
+
+  // increment angle every frame when playing
+  useAnimationFrame((t, delta) => {
+    if (playing) {
+      // delta = ms since last frame
+      const speed = 360 / 4000; // 360deg per 4000ms (4s per rotation)
+      rotate.set(rotate.get() + speed * delta);
+    }
+  });
 
   return (
     <div className="relative mx-auto h-44 w-44 md:h-56 md:w-56">
       <motion.div
-        animate={playing ? { rotate: 360 } : { rotate: 0 }}
-        transition={{ duration: 4, ease: "linear", repeat: playing ? Infinity : 1 }}
-        className="pointer-events-none absolute inset-0 rounded-full border-[10px] border-black shadow-2xl flex items-center justify-center"
         style={{
+          rotate,
           backgroundImage: `
             repeating-radial-gradient(
               circle,
@@ -102,6 +109,7 @@ const Vinyl = ({ playing, onToggle, trackIndex, setTrackIndex, tracks }) => {
           backgroundSize: "100% 100%",
           backgroundPosition: "center",
         }}
+        className="pointer-events-none absolute inset-0 rounded-full border-[10px] border-black shadow-2xl flex items-center justify-center"
       >
         <img
           src={currentTrack.cover}
@@ -255,10 +263,7 @@ const Hero = () => {
           tracks={tracks}
         />
         <audio ref={audioRef} src={tracks[trackIndex].audio} preload="auto" />
-        <div className="relative h-24">
-
         <AudioVisualizer audioRef={audioRef} barColor="#f0abfc" />
-        </div>
       </div>
 
       <motion.div
