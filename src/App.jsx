@@ -5,6 +5,8 @@ import {
   ChevronDown, ExternalLink, Sparkles,
   SkipBack, SkipForward   // <— add these
 } from "lucide-react";
+
+import  Aurora  from "./components/ui/Aurora.jsx";
 import { Button } from "./components/ui/Button.jsx";
 import {
   Card,
@@ -207,9 +209,16 @@ const Hero = () => {
       ref={ref}
       className="relative isolate flex min-h-[90vh] flex-col items-center justify-center overflow-hidden px-6 pt-4 text-center"
     >
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_50%_10%,rgba(255,255,255,0.08),transparent_60%),conic-gradient(from_210deg_at_50%_50%,#f0abfc,transparent_25%,#fb7185_50%,transparent_75%,#fde047)] opacity-30" />
+
+      <Aurora
+        colorStops={["#5227FF", "#FF3AB9", "#FFD54F"]}
+        blend={0.5}
+        amplitude={1.0}
+        speed={0.5}
+      />
       <div className="absolute inset-0 -z-20 opacity-20 bg-[url('https://tse4.mm.bing.net/th/id/OIP.l5Zqv_Il0r3pkzEW7RDRqwHaFC?pid=Api&h=1024&w=1024&c=1')] bg-cover bg-center" />
 
+      {/* Headline */}
       <motion.h1
         style={{ y }}
         className="font-display relative z-10 text-5xl font-black tracking-tight md:text-7xl"
@@ -220,6 +229,7 @@ const Hero = () => {
         </span>
       </motion.h1>
 
+      {/* Subtitle */}
       <motion.p
         style={{ y }}
         className="mt-4 max-w-2xl text-balance text-zinc-300/90"
@@ -228,11 +238,11 @@ const Hero = () => {
         code, bold visuals, smooth flows.
       </motion.p>
 
+      {/* Vinyl + Audio Visualizer */}
       <div className="mt-10">
         <Vinyl
           playing={playing}
           onToggle={() => {
-
             setPlaying((v) => {
               const newState = !v;
               if (newState) audioRef.current?.play();
@@ -241,18 +251,10 @@ const Hero = () => {
             });
           }}
           trackIndex={trackIndex}
-          setTrackIndex={(i) => {
-            setTrackIndex(i);
-          }}
+          setTrackIndex={(i) => setTrackIndex(i)}
           tracks={tracks}
         />
-
-        <audio
-          ref={audioRef}
-          src={tracks[trackIndex].audio}
-          preload="auto"
-        />
-
+        <audio ref={audioRef} src={tracks[trackIndex].audio} preload="auto" />
         <AudioVisualizer audioRef={audioRef} barColor="#f0abfc" />
       </div>
 
@@ -263,7 +265,31 @@ const Hero = () => {
       >
         <ChevronDown />
       </motion.div>
+
+      <style jsx global>{`
+    @property --angle {
+      syntax: "<angle>";
+      initial-value: 0deg;
+      inherits: false;
+    }
+    @property --hue {
+      syntax: "<number>";
+      initial-value: 0;
+      inherits: false;
+    }
+    @keyframes lightRotate {
+      to {
+        --angle: 360deg;
+      }
+    }
+    @keyframes hueDrift {
+      to {
+        --hue: 360;
+      }
+    }
+  `}</style>
     </section>
+
   );
 };
 
@@ -339,7 +365,15 @@ const About = () => {
   );
 };
 
-const ProjectCard = ({ title, tags = [], desc, link = "#" }) => (
+const ProjectCard = ({
+  title,
+  tags = [],
+  desc,
+  link = "#",
+  image,             // e.g. "/images/projects/statforge.png"
+  imageAlt,          // e.g. "StatForge UI preview"
+  imageSet,          // optional srcset string
+}) => (
   <Card className="group relative overflow-hidden border-white/10 bg-white/[0.03] backdrop-blur">
     <CardHeader>
       <CardTitle className="flex items-center justify-between text-white">
@@ -350,8 +384,9 @@ const ProjectCard = ({ title, tags = [], desc, link = "#" }) => (
               <a
                 href={link}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="rounded-full p-1 hover:bg-white/10"
+                aria-label={`Open project: ${title}`}
               >
                 <ExternalLink className="h-4 w-4" />
               </a>
@@ -361,8 +396,10 @@ const ProjectCard = ({ title, tags = [], desc, link = "#" }) => (
         </TooltipProvider>
       </CardTitle>
     </CardHeader>
+
     <CardContent>
       <p className="text-sm text-zinc-300/90">{desc}</p>
+
       <div className="mt-3 flex flex-wrap gap-2">
         {tags.map((t) => (
           <Badge key={t} className="rounded-full bg-zinc-800/70 text-zinc-200">
@@ -370,17 +407,20 @@ const ProjectCard = ({ title, tags = [], desc, link = "#" }) => (
           </Badge>
         ))}
       </div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.2 }}
-        className="mt-4 h-32 w-full overflow-hidden rounded-xl border border-white/5 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url(https://tse1.mm.bing.net/th/id/OIP.dm-Y7pWtVyffScG_AXO52wHaE8?pid=Api&h=1024&w=1024&c=1)",
-        }}
-      />
+
+      <div className="mt-4 overflow-hidden rounded-xl border border-white/5">
+        <img
+          src={image || "/images/projects/placeholder.jpg"}
+          srcSet={imageSet}
+          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+          alt={imageAlt || `${title} preview`}
+          loading="lazy"
+          width="640"
+          height="360"
+          className="block h-32 w-full object-cover"
+          onError={(e) => { e.currentTarget.src = "/images/projects/placeholder.jpg"; }}
+        />
+      </div>
     </CardContent>
   </Card>
 );
@@ -402,21 +442,17 @@ const Work = () => (
           title="StatForge – Skill RPG"
           desc="Track and level up real-life skills with a gamified flow. Built with React + Node + Postgres."
           tags={["React", "Node", "PostgreSQL", "Gamified"]}
+          link="https://example.com/statforge"
+          image="/projectimg/statforge.png"
+          imageAlt="StatForge dashboard screen"
         />
         <ProjectCard
           title="WALTER – Voice Assistant"
-          desc="Desktop voice assistant with near‑real‑time TTS/VC experiments. Modular pipeline & hotkeys."
+          desc="Desktop voice assistant with near-real-time TTS/VC experiments. Modular pipeline & hotkeys."
           tags={["Python", "Vosk", "Audio DSP", "Electron-ready"]}
-        />
-        <ProjectCard
-          title="LifeLedger – Timeline App"
-          desc="Personal event timeline + stats. Responsive MUI components with custom theming."
-          tags={["React", "MUI", "Charts"]}
-        />
-        <ProjectCard
-          title="QR Drop – Share via QR"
-          desc="Upload a file, get a QR. Frictionless sharing with expiring links and edge storage."
-          tags={["React", "Supabase", "Edge"]}
+          link="https://example.com/walter"
+          image="/projectimg/walter.png"
+          imageAlt="WALTER assistant UI"
         />
       </div>
     </div>

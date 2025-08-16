@@ -9,8 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@nauverse/react-aurora-background": "^1.0.12",
     "framer-motion": "^11.0.0",
     "lucide-react": "^0.441.0",
+    "ogl": "^1.0.11",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
