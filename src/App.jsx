@@ -468,8 +468,8 @@ const BarsAndBytes = () => {
     "ship(ideas, { clean: true, bold: true })",
   ];
   return (
-    <section className="relative mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20 overflow-hidden">
-      <div className="grid items-start gap-8 md:gap-10 md:grid-cols-2 max-w-full">
+    <section className="relative w-full max-w-full overflow-hidden px-4 sm:px-6 py-12 sm:py-20">
+      <div className="grid items-start gap-8 md:gap-10 md:grid-cols-2 w-full max-w-full">
         {/* Left */}
         <div>
           <h2 className="mb-2 text-xl sm:text-2xl md:text-3xl font-bold text-zinc-100">
@@ -489,19 +489,15 @@ const BarsAndBytes = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="w-full max-w-full rounded-lg border border-white/10 bg-black/50
-                 p-2 sm:p-3 md:p-4 text-[11px] sm:text-[12px] md:text-[13px] text-emerald-300 shadow-inner
-                 [overflow-wrap:anywhere] sm:[overflow-wrap:normal]"
+                className="w-full max-w-full break-words rounded-xl border border-white/10
+             bg-black/50 p-3 text-xs sm:text-[13px] text-emerald-300 shadow-inner"
               >
                 {`// ${i + 1} `}{b}
               </motion.pre>
             ))}
           </div>
         </div>
-
-        {/* Right */}
         <div>
-          {/* Mobile: Accordion */}
           <div className="md:hidden space-y-3">
             <details className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
               <summary className="cursor-pointer text-sm font-semibold text-zinc-100">Stack</summary>
@@ -532,8 +528,7 @@ const BarsAndBytes = () => {
               </div>
             </details>
           </div>
-
-          {/* Desktop: Tabs */}
+          
           <div className="hidden md:block">
             <Tabs defaultValue="stack" className="w-full">
               <TabsList className="grid w-full grid-cols-3 text-xs md:text-sm">
