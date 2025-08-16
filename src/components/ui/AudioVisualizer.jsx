@@ -117,7 +117,7 @@ export default function AudioVisualizer({ audioRef, barColor = "#f0abfc" }) {
       ref={canvasRef}
       width={300}
       height={80}
-      className="mx-auto mt-4"
+      className="mx-auto mt-4 pt-4 sm:pt-0"
     />
   );
 }
