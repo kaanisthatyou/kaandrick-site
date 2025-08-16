@@ -5,16 +5,18 @@ export default function KaandrickLogo() {
 
   return (
     <span
-      className="relative inline-block  text-3xl pt-1 font-bold tracking-widest overflow-hidden"
+      className="select-none cursor-default relative inline-block  text-3xl pt-1 font-bold tracking-widest overflow-hidden"
       style={{ cursor: "default" }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <span className="relative z-0 text-white">KAANDRICK</span>
+      <span className="select-none cursor-default relative z-0 text-white">KAANDRICK</span>
 
       <span
         className="absolute inset-0 z-10 pointer-events-none pt-1 bg-cover bg-center text-transparent bg-clip-text transition-[clip-path] duration-700 ease-out"
         style={{
+          select: "none",
+          cursor: "default",
           backgroundImage:
             "url('https://upload.wikimedia.org/wikipedia/en/5/51/Kendrick_Lamar_-_Damn.png')",
           backgroundPosition: "center 35%",

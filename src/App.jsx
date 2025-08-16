@@ -223,8 +223,8 @@ const Hero = () => {
         style={{ y }}
         className="font-display relative z-10 text-5xl font-black tracking-tight md:text-7xl"
       >
-        <span className="block text-zinc-200">I'M</span>
-        <span className="block bg-gradient-to-r from-fuchsia-400 via-rose-400 to-amber-300 bg-clip-text text-transparent drop-shadow">
+        <span className="select-none cursor-default block text-zinc-200">I'M</span>
+        <span className="select-none cursor-default block bg-gradient-to-r from-fuchsia-400 via-rose-400 to-amber-300 bg-clip-text text-transparent drop-shadow">
           KAANDRICK
         </span>
       </motion.h1>
@@ -305,7 +305,7 @@ const About = () => {
     <section ref={ref} className="relative mx-auto max-w-6xl px-6 py-24">
       <div className="grid items-center gap-10 md:grid-cols-2">
         <motion.div style={{ y }} className="order-2 md:order-1">
-          <h2 className="mb-4 text-3xl font-bold text-zinc-100">
+          <h2 className=" select-none cursor-default mb-4 text-3xl font-bold text-zinc-100">
             Who is <NeonWord text="Kaandrick" />?
           </h2>
           <p className="text-zinc-300/90">
@@ -638,7 +638,7 @@ export default function App() {
     document.documentElement.classList.add("dark");
   }, []);
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-black text-zinc-50">
+    <div className="min-h-screen overflow-x-hidden bg-gradient-to-b from-zinc-950 via-zinc-900 to-black text-zinc-50">
       <Grain />
       <ScrollProgress />
       <header className="sticky top-0 z-40 border-b border-white/5 bg-black/40 backdrop-blur">
