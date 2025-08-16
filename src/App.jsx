@@ -468,18 +468,18 @@ const BarsAndBytes = () => {
     "ship(ideas, { clean: true, bold: true })",
   ];
   return (
-    <section className="relative mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-24 overflow-x-hidden">
+    <section className="relative mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20 overflow-x-hidden">
       <div className="grid items-start gap-8 md:gap-10 md:grid-cols-2">
-        {/* Left side */}
+        {/* Left */}
         <div>
-          <h2 className="mb-3 text-xl sm:text-2xl md:text-3xl font-bold text-zinc-100">
+          <h2 className="mb-2 text-xl sm:text-2xl md:text-3xl font-bold text-zinc-100">
             Bars & Bytes
           </h2>
           <p className="text-xs sm:text-sm md:text-base text-zinc-300/90">
             Snippets and micro-thoughts that capture the way I build: readable,
             reusable, rhythm-first.
           </p>
-          <Separator className="my-6" />
+          <Separator className="my-5" />
 
           <div className="space-y-3">
             {bars.map((b, i) => (
@@ -489,59 +489,83 @@ const BarsAndBytes = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="overflow-x-auto rounded-lg border border-white/10 bg-black/50 p-3 sm:p-4 text-[12px] sm:text-[13px] text-emerald-300 shadow-inner"
+                className="w-full max-w-full overflow-x-auto rounded-lg border border-white/10 bg-black/50
+                       p-2 sm:p-3 md:p-4 text-[11px] sm:text-[12px] md:text-[13px] text-emerald-300 shadow-inner"
               >
-                {`// ${i + 1}`} {b}
+                {`// ${i + 1} `}{b}
               </motion.pre>
             ))}
           </div>
         </div>
 
-        {/* Right side */}
+        {/* Right */}
         <div>
-          <Tabs defaultValue="stack" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 text-[10px] sm:text-xs md:text-sm">
-              <TabsTrigger value="stack">Stack</TabsTrigger>
-              <TabsTrigger value="process">Process</TabsTrigger>
-              <TabsTrigger value="values">Values</TabsTrigger>
-            </TabsList>
+          {/* Mobile: Accordion */}
+          <div className="md:hidden space-y-3">
+            <details className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <summary className="cursor-pointer text-sm font-semibold text-zinc-100">Stack</summary>
+              <div className="mt-3">
+                <div className="flex flex-wrap justify-center sm:justify-start gap-2">
+                  <Badge>React</Badge><Badge>TypeScript</Badge><Badge>Tailwind</Badge>
+                  <Badge>Framer Motion</Badge><Badge>MUI</Badge>
+                </div>
+                <p className="mt-2 text-xs text-zinc-300/90">
+                  Also comfy with Node, Express, PostgreSQL, MongoDB, and cloud-ish stuff.
+                </p>
+              </div>
+            </details>
+
+            <details className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <summary className="cursor-pointer text-sm font-semibold text-zinc-100">Process</summary>
+              <div className="mt-3 space-y-2 text-xs text-zinc-300/90">
+                <p>Design in the browser, iterate fast, instrument UX, and measure delight.</p>
+                <p>Prefer meaningful motion over flamboyance. Ship minimal, then season.</p>
+              </div>
+            </details>
+
+            <details className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <summary className="cursor-pointer text-sm font-semibold text-zinc-100">Values</summary>
+              <div className="mt-3 space-y-2 text-xs text-zinc-300/90">
+                <p>Accessibility, performance, clarity — and a touch of play.</p>
+                <p>Be kind to teammates and ruthless with flaky builds.</p>
+              </div>
+            </details>
+          </div>
+
+          {/* Desktop: Tabs */}
+          <div className="hidden md:block">
+            <Tabs defaultValue="stack" className="w-full">
+              <TabsList className="grid w-full grid-cols-3 text-xs md:text-sm">
+                <TabsTrigger value="stack">Stack</TabsTrigger>
+                <TabsTrigger value="process">Process</TabsTrigger>
+                <TabsTrigger value="values">Values</TabsTrigger>
+              </TabsList>
+
               <TabsContent value="stack" className="space-y-2 mt-3">
                 <div className="flex flex-wrap gap-2">
-                  <Badge>React</Badge>
-                  <Badge>TypeScript</Badge>
-                  <Badge>Tailwind</Badge>
-                  <Badge>Framer Motion</Badge>
-                  <Badge>MUI</Badge>
+                  <Badge>React</Badge><Badge>TypeScript</Badge><Badge>Tailwind</Badge>
+                  <Badge>Framer Motion</Badge><Badge>MUI</Badge>
                 </div>
                 <p className="text-sm text-zinc-300/90">
-                  Also comfy with Node, Express, PostgreSQL, MongoDB, and
-                  cloud-ish stuff.
+                  Also comfy with Node, Express, PostgreSQL, MongoDB, and cloud-ish stuff.
                 </p>
               </TabsContent>
 
-              <TabsContent value="process" className="space-y-2 mt-3">
-                <p className="text-sm text-zinc-300/90">
-                  Design in the browser, iterate fast, instrument UX, and measure
-                  delight.
-                </p>
-                <p className="text-sm text-zinc-300/90">
-                  Prefer meaningful motion over flamboyance. Ship minimal, then
-                  season.
-                </p>
+              <TabsContent value="process" className="space-y-2 mt-3 text-sm text-zinc-300/90">
+                <p>Design in the browser, iterate fast, instrument UX, and measure delight.</p>
+                <p>Prefer meaningful motion over flamboyance. Ship minimal, then season.</p>
               </TabsContent>
 
-              <TabsContent value="values" className="space-y-2 mt-3">
-                <p className="text-sm text-zinc-300/90">
-                  Accessibility, performance, clarity—and a touch of play.
-                </p>
-                <p className="text-sm text-zinc-300/90">
-                  Be kind to teammates and ruthless with flaky builds.
-                </p>
+              <TabsContent value="values" className="space-y-2 mt-3 text-sm text-zinc-300/90">
+                <p>Accessibility, performance, clarity — and a touch of play.</p>
+                <p>Be kind to teammates and ruthless with flaky builds.</p>
               </TabsContent>
-          </Tabs>
+            </Tabs>
+          </div>
         </div>
       </div>
     </section>
+
   );
 
 };
