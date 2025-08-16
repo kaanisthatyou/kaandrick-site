@@ -468,99 +468,119 @@ const BarsAndBytes = () => {
     "ship(ideas, { clean: true, bold: true })",
   ];
   return (
-    <section className="relative w-full max-w-full overflow-hidden px-4 sm:px-6 py-12 sm:py-20">
-      <div className="grid items-start gap-8 md:gap-10 md:grid-cols-2 w-full max-w-full">
-        {/* Left */}
-        <div>
-          <h2 className="mb-2 text-xl sm:text-2xl md:text-3xl font-bold text-zinc-100">
-            Bars & Bytes
-          </h2>
-          <p className="text-xs sm:text-sm md:text-base text-zinc-300/90">
-            Snippets and micro-thoughts that capture the way I build: readable,
-            reusable, rhythm-first.
-          </p>
-          <Separator className="my-5" />
+<section className="relative w-full max-w-full overflow-hidden px-4 sm:px-6 py-12 sm:py-20">
+  <div className="grid items-start gap-8 md:gap-10 md:grid-cols-2 w-full max-w-full">
+    {/* Left */}
+    <div>
+      <h2 className="mb-2 text-xl sm:text-2xl md:text-3xl font-bold text-zinc-100">
+        Bars & Bytes
+      </h2>
+      <p className="text-xs sm:text-sm md:text-base text-zinc-300/90">
+        Snippets and micro-thoughts that capture the way I build: readable,
+        reusable, rhythm-first.
+      </p>
+      <Separator className="my-5" />
 
-          <div className="space-y-3">
-            {bars.map((b, i) => (
-              <motion.pre
-                key={b}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="w-full max-w-full break-words rounded-xl border border-white/10
-             bg-black/50 p-3 text-xs sm:text-[13px] text-emerald-300 shadow-inner"
-              >
-                {`// ${i + 1} `}{b}
-              </motion.pre>
-            ))}
+      {/* 👇 Mobile: compact chips (no overflow) */}
+      <div className="md:hidden space-y-2">
+        {bars.map((b, i) => (
+          <div
+            key={b}
+            className="rounded-lg border border-white/10 bg-black/50 px-3 py-2
+                       text-[11px] text-emerald-300 font-mono leading-relaxed"
+          >
+            <span className="opacity-70 mr-2">// {i + 1}</span>
+            <span className="[overflow-wrap:anywhere] break-words">{b}</span>
           </div>
-        </div>
-        <div>
-          <div className="md:hidden space-y-3">
-            <details className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
-              <summary className="cursor-pointer text-sm font-semibold text-zinc-100">Stack</summary>
-              <div className="mt-3">
-                <div className="flex flex-wrap justify-center sm:justify-start gap-2">
-                  <Badge>React</Badge><Badge>TypeScript</Badge><Badge>Tailwind</Badge>
-                  <Badge>Framer Motion</Badge><Badge>MUI</Badge>
-                </div>
-                <p className="mt-2 text-xs text-zinc-300/90">
-                  Also comfy with Node, Express, PostgreSQL, MongoDB, and cloud-ish stuff.
-                </p>
-              </div>
-            </details>
-
-            <details className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
-              <summary className="cursor-pointer text-sm font-semibold text-zinc-100">Process</summary>
-              <div className="mt-3 space-y-2 text-xs text-zinc-300/90">
-                <p>Design in the browser, iterate fast, instrument UX, and measure delight.</p>
-                <p>Prefer meaningful motion over flamboyance. Ship minimal, then season.</p>
-              </div>
-            </details>
-
-            <details className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
-              <summary className="cursor-pointer text-sm font-semibold text-zinc-100">Values</summary>
-              <div className="mt-3 space-y-2 text-xs text-zinc-300/90">
-                <p>Accessibility, performance, clarity — and a touch of play.</p>
-                <p>Be kind to teammates and ruthless with flaky builds.</p>
-              </div>
-            </details>
-          </div>
-          
-          <div className="hidden md:block">
-            <Tabs defaultValue="stack" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 text-xs md:text-sm">
-                <TabsTrigger value="stack">Stack</TabsTrigger>
-                <TabsTrigger value="process">Process</TabsTrigger>
-                <TabsTrigger value="values">Values</TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="stack" className="space-y-2 mt-3">
-                <div className="flex flex-wrap gap-2">
-                  <Badge>React</Badge><Badge>TypeScript</Badge><Badge>Tailwind</Badge>
-                  <Badge>Framer Motion</Badge><Badge>MUI</Badge>
-                </div>
-                <p className="text-sm text-zinc-300/90">
-                  Also comfy with Node, Express, PostgreSQL, MongoDB, and cloud-ish stuff.
-                </p>
-              </TabsContent>
-
-              <TabsContent value="process" className="space-y-2 mt-3 text-sm text-zinc-300/90">
-                <p>Design in the browser, iterate fast, instrument UX, and measure delight.</p>
-                <p>Prefer meaningful motion over flamboyance. Ship minimal, then season.</p>
-              </TabsContent>
-
-              <TabsContent value="values" className="space-y-2 mt-3 text-sm text-zinc-300/90">
-                <p>Accessibility, performance, clarity — and a touch of play.</p>
-                <p>Be kind to teammates and ruthless with flaky builds.</p>
-              </TabsContent>
-            </Tabs>
-          </div>
-        </div>
+        ))}
       </div>
-    </section>
+
+      {/* 👇 Desktop: your original code cards */}
+      <div className="hidden md:block space-y-3">
+        {bars.map((b, i) => (
+          <motion.pre
+            key={b}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.1 }}
+            className="w-full max-w-full overflow-x-auto rounded-xl border border-white/10
+                       bg-black/50 p-4 text-[13px] text-emerald-300 shadow-inner"
+          >
+            {`// ${i + 1} `}{b}
+          </motion.pre>
+        ))}
+      </div>
+    </div>
+
+    {/* Right */}
+    <div>
+      {/* Mobile: Accordion */}
+      <div className="md:hidden space-y-3">
+        <details className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+          <summary className="cursor-pointer text-sm font-semibold text-zinc-100">Stack</summary>
+          <div className="mt-3">
+            <div className="flex flex-wrap justify-center sm:justify-start gap-2">
+              <Badge>React</Badge><Badge>TypeScript</Badge><Badge>Tailwind</Badge>
+              <Badge>Framer Motion</Badge><Badge>MUI</Badge>
+            </div>
+            <p className="mt-2 text-xs text-zinc-300/90">
+              Also comfy with Node, Express, PostgreSQL, MongoDB, and cloud-ish stuff.
+            </p>
+          </div>
+        </details>
+
+        <details className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+          <summary className="cursor-pointer text-sm font-semibold text-zinc-100">Process</summary>
+          <div className="mt-3 space-y-2 text-xs text-zinc-300/90">
+            <p>Design in the browser, iterate fast, instrument UX, and measure delight.</p>
+            <p>Prefer meaningful motion over flamboyance. Ship minimal, then season.</p>
+          </div>
+        </details>
+
+        <details className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+          <summary className="cursor-pointer text-sm font-semibold text-zinc-100">Values</summary>
+          <div className="mt-3 space-y-2 text-xs text-zinc-300/90">
+            <p>Accessibility, performance, clarity — and a touch of play.</p>
+            <p>Be kind to teammates and ruthless with flaky builds.</p>
+          </div>
+        </details>
+      </div>
+
+      {/* Desktop: Tabs */}
+      <div className="hidden md:block">
+        <Tabs defaultValue="stack" className="w-full">
+          <TabsList className="grid w-full grid-cols-3 text-xs md:text-sm">
+            <TabsTrigger value="stack">Stack</TabsTrigger>
+            <TabsTrigger value="process">Process</TabsTrigger>
+            <TabsTrigger value="values">Values</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="stack" className="space-y-2 mt-3">
+            <div className="flex flex-wrap gap-2">
+              <Badge>React</Badge><Badge>TypeScript</Badge><Badge>Tailwind</Badge>
+              <Badge>Framer Motion</Badge><Badge>MUI</Badge>
+            </div>
+            <p className="text-sm text-zinc-300/90">
+              Also comfy with Node, Express, PostgreSQL, MongoDB, and cloud-ish stuff.
+            </p>
+          </TabsContent>
+
+          <TabsContent value="process" className="space-y-2 mt-3 text-sm text-zinc-300/90">
+            <p>Design in the browser, iterate fast, instrument UX, and measure delight.</p>
+            <p>Prefer meaningful motion over flamboyance. Ship minimal, then season.</p>
+          </TabsContent>
+
+          <TabsContent value="values" className="space-y-2 mt-3 text-sm text-zinc-300/90">
+            <p>Accessibility, performance, clarity — and a touch of play.</p>
+            <p>Be kind to teammates and ruthless with flaky builds.</p>
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  </div>
+</section>
+
 
   );
 
@@ -578,7 +598,7 @@ const TimelineItem = ({ year, title, body }) => (
 );
 
 const Timeline = () => (
-  <section className="relative mx-auto max-w-4xl px-6 py-24">
+  <section className="relative mx-auto max-w-4xl px-6 pt-6 pb-24">
     <h2 className="mb-8 text-center text-3xl font-bold text-zinc-100">
       Timeline
     </h2>
