@@ -597,10 +597,10 @@ const Contact = () => (
             Send
           </Button>
           <a
-            href="mailto:hello@kaandrick.dev"
+            href="mailto:kaancheleby@gmail.com"
             className="text-sm text-zinc-400 hover:text-zinc-200"
           >
-            Or email: hello@kaandrick.dev
+            Or email: kaancheleby@gmail.com
           </a>
         </div>
       </div>
