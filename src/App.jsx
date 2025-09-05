@@ -222,7 +222,7 @@ const Hero = () => {
         amplitude={1.0}
         speed={0.5}
       />
-      <div className="absolute inset-0 -z-20 opacity-35 bg-[url('public/pics/me3.png')] bg-cover bg-center" />
+      <div className="absolute inset-0 -z-20 opacity-35 bg-[url('public/pics/me1.jpg')] bg-cover bg-center" />
 
       {/* Headline */}
       <motion.h1
