@@ -84,11 +84,9 @@ const Vinyl = ({ playing, trackIndex, setTrackIndex, tracks, onToggle }) => {
     setTrackIndex(nextIndex);
   };
 
-  // increment angle every frame when playing
   useAnimationFrame((t, delta) => {
     if (playing) {
-      // delta = ms since last frame
-      const speed = 360 / 4000; // 360deg per 4000ms (4s per rotation)
+      const speed = 360 / 4000;
       rotate.set(rotate.get() + speed * delta);
     }
   });
@@ -224,7 +222,7 @@ const Hero = () => {
         amplitude={1.0}
         speed={0.5}
       />
-      <div className="absolute inset-0 -z-20 opacity-20 bg-[url('https://tse4.mm.bing.net/th/id/OIP.l5Zqv_Il0r3pkzEW7RDRqwHaFC?pid=Api&h=1024&w=1024&c=1')] bg-cover bg-center" />
+      <div className="absolute inset-0 -z-20 opacity-35 bg-[url('public/pics/me3.png')] bg-cover bg-center" />
 
       {/* Headline */}
       <motion.h1
@@ -233,8 +231,13 @@ const Hero = () => {
       >
         <span className="select-none cursor-default block text-zinc-200">I'M</span>
         <span className="select-none cursor-default block bg-gradient-to-r from-fuchsia-400 via-rose-400 to-amber-300 bg-clip-text text-transparent drop-shadow">
-          KAANDRICK
+          KAAN
         </span>
+        <div className="flex flex-direction-row align-center justify-center">
+        <span className="select-none cursor-default block text-zinc-200 text-sm pl-2 mr-1">( A.K.A. </span>
+        <span className="pr-1 select-none cursor-default block bg-gradient-to-r from-fuchsia-500 via-rose-400 to-amber-500 bg-clip-text text-transparent drop-shadow text-sm">KAANDRICK</span>
+        <span className="select-none cursor-default block text-zinc-200 text-sm">) </span>
+        </div>
       </motion.h1>
 
       {/* Subtitle */}
@@ -352,18 +355,18 @@ const About = () => {
             </Button>
           </div>
         </motion.div>
-        <motion.div style={{ y }} className="order-1 md:order-2">
+        <motion.div style={{ y }} className="bg-white order-1 md:order-2 rounded-3xl">
           <div
             className="relative aspect-square w-full overflow-hidden rounded-3xl border border-white/10 bg-cover bg-center"
             style={{
               backgroundImage:
-                "url(https://tse3.mm.bing.net/th/id/OIP.1INDhfWs90VNhvnresCHaQHaI6?pid=Api&h=1024&w=1024&c=1)",
+                "url(/pics/me2.png)",
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-tr from-black/60 to-transparent" />
             <div className="absolute bottom-3 right-3">
               <Badge className="rounded-full bg-fuchsia-500/80 px-3 py-1 text-xs text-white backdrop-blur">
-                vibe coder
+                frontend alchemist
               </Badge>
             </div>
           </div>
@@ -666,11 +669,11 @@ const Contact = () => (
       <div className="flex flex-wrap items-center gap-4 text-sm text-zinc-400">
         <a
           className="flex items-center gap-2 hover:text-zinc-100"
-          href="https://github.com/Bearism "
+          href="https://github.com/kaanisthatyou "
           target="_blank"
           rel="noreferrer"
         >
-          <Github className="h-4 w-4" /> github.com/Bearism
+          <Github className="h-4 w-4" /> github.com/kaanisthatyou
         </a>
         <a
           className="flex items-center gap-2 hover:text-zinc-100"
